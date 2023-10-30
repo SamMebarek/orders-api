@@ -11,6 +11,7 @@ import (
 
 func (a *App) loadRoutes() {
 	router := chi.NewRouter()
+
 	router.Use(middleware.Logger)
 
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
@@ -31,8 +32,7 @@ func (a *App) loadOrderRoutes(router chi.Router) {
 
 	router.Post("/", orderHandler.Create)
 	router.Get("/", orderHandler.List)
-	router.Get("/{id}", orderHandler.GetById)
-	router.Put("/{id}", orderHandler.UpdateById)
-	router.Delete("/{id}", orderHandler.DeleteById)
-
+	router.Get("/{id}", orderHandler.GetByID)
+	router.Put("/{id}", orderHandler.UpdateByID)
+	router.Delete("/{id}", orderHandler.DeleteByID)
 }

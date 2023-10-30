@@ -21,7 +21,12 @@ func (h *Order) Create(w http.ResponseWriter, r *http.Request) {
 		CustomerID uuid.UUID        `json:"customer_id"`
 		LineItems  []model.LineItem `json:"line_items"`
 	}
+	// if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+	// 	w.WriteHeader(http.StatusBadRequest)
+	// 	return
+	// }
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		fmt.Printf("Error decoding JSON: %v\n", err) // Print the error for debugging
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -56,14 +61,14 @@ func (o *Order) List(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("List all orders")
 }
 
-func (o *Order) GetById(w http.ResponseWriter, r *http.Request) {
+func (o *Order) GetByID(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Get an order by ID")
 }
 
-func (o *Order) UpdateById(w http.ResponseWriter, r *http.Request) {
+func (o *Order) UpdateByID(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Update an order by ID")
 }
 
-func (o *Order) DeleteById(w http.ResponseWriter, r *http.Request) {
+func (o *Order) DeleteByID(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Delete an order by ID")
 }
