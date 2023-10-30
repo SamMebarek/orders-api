@@ -16,13 +16,15 @@ func (a *App) loadRoutes() {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	router.Route("/orders", loadOrderRoutes)
+	router.Route("/orders", a.loadOrderRoutes)
 
 	a.router = router
 }
 
-func loadOrderRoutes(router chi.Router) {
-	orderHandler := &handler.Order{}
+func (a *App) loadOrderRoutes(router chi.Router) {
+	orderHandler := &handler.RedisRepo{
+		Client: a.rdb,
+	}
 
 	router.Post("/", orderHandler.Create)
 	router.Get("/", orderHandler.List)
