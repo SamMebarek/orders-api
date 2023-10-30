@@ -106,8 +106,8 @@ func (r *RedisRepo) Update(ctx context.Context, order model.Order) error {
 }
 
 type FindAllPage struct {
-	Size   uint
-	Offset uint
+	Size   uint64
+	Offset uint64
 }
 
 type FindResult struct {
@@ -115,7 +115,7 @@ type FindResult struct {
 	Cursor uint64
 }
 
-func (r *RedisRepo) FindAll(ctx context.Context) (FindResult, error) {
+func (r *RedisRepo) FindAll(ctx context.Context, page FindAllPage) (FindResult, error) {
 	res := r.Client.SScan(ctx, "orders", page.Offset, "*", int64(page.Size))
 
 	keys, cursor, err := res.Result()
@@ -127,14 +127,15 @@ func (r *RedisRepo) FindAll(ctx context.Context) (FindResult, error) {
 		return FindResult{
 			Orders: []model.Order{},
 		}, nil
-
+	}
 	xs, err := r.Client.MGet(ctx, keys...).Result()
+
 	if err != nil {
 		return FindResult{}, fmt.Errorf("failed to get orders: %w", err)
 	}
 
 	orders := make([]model.Order, len(xs))
-	
+
 	for i, x := range xs {
 		x := x.(string)
 		var order model.Order

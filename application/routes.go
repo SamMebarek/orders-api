@@ -8,7 +8,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func loadRoutes() *chi.Mux {
+func (a *App) loadRoutes() {
 	router := chi.NewRouter()
 	router.Use(middleware.Logger)
 
@@ -18,7 +18,7 @@ func loadRoutes() *chi.Mux {
 
 	router.Route("/orders", loadOrderRoutes)
 
-	return router
+	a.router = router
 }
 
 func loadOrderRoutes(router chi.Router) {
