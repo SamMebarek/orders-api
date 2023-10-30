@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/SamMebarek/orders-api/model"
-	"github.com/SamMebarek/orders-api/model/repository/order"
+	"github.com/SamMebarek/orders-api/repository/order"
 	"github.com/google/uuid"
 )
 
