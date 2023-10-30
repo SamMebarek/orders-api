@@ -1,4 +1,4 @@
-module github.com/dreamsofcode-io/orders-api
+module github.com/SamMebarek/orders-api
 
 go 1.21.3
 
